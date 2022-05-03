@@ -1,17 +1,49 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from 'react'
+import MapDisplay from './Map'
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+class App extends React.Component {
+  state = {
+    userLocation : {}
+  }
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+  getUserLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(position => {
+        this.setState({
+          userLocation : {
+            lat : position.coords.latitude,
+            lng : position.coords.longitude,
+          }
+        })
+      })
+    }
+  }
+
+  componentDidMount = () => {
+    console.log("hello");
+    this.getUserLocation();
+  }
+
+  addMarker = () => {
+    console.log("add marker");
+  }
+
+  render() {
+
+    return (
+      <div class = "wrapper">
+        <div className = "App">
+          <MapDisplay userLocation={this.state.userLocation} />
+        </div>
+        <br />
+        <div>
+            <button onClick= {() => this.addMarker()}>
+            place Marker</button>
+        </div>
+    </div>
+    );
+  }
+
+}
+
+export default App;
