@@ -1,5 +1,8 @@
 import React from 'react'
 import MapDisplay from './Map'
+import * as ReactDOM from 'react-dom/client';
+
+
 
 class App extends React.Component {
   state = {
@@ -20,7 +23,7 @@ class App extends React.Component {
   }
 
   componentDidMount = () => {
-    console.log("hello");
+  
     this.getUserLocation();
   }
 
@@ -35,15 +38,11 @@ class App extends React.Component {
         <div className = "App">
           <MapDisplay userLocation={this.state.userLocation} />
         </div>
-        <br />
-        <div>
-            <button onClick= {() => this.addMarker()}>
-            place Marker</button>
-        </div>
-    </div>
+      </div>
     );
   }
 
 }
 
-export default App;
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<App />);
